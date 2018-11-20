@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="340dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/dodac"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="53dp"
+        android:text="+"
+        android:textSize="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText" />
+
+    <Button
+        android:id="@+id/odjac"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+
+        android:layout_marginTop="53dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginRight="29dp"
+        android:text="-"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText" />
+
+    <Button
+        android:id="@+id/pomnozyc"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="39dp"
+        android:text="*"
+        android:textSize="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dodac" />
+
+    <Button
+        android:id="@+id/podzelic"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginRight="29dp"
+        android:text="/"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/odjac" />
+
+    <Button
+        android:id="@+id/historia"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginLeft="132dp"
+        android:text="Historia"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/suma" />
+
+    <Button
+        android:id="@+id/suma"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+
+        android:layout_marginStart="132dp"
+        android:layout_marginLeft="132dp"
+        android:layout_marginTop="24dp"
+        android:text="="
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pomnozyc" />
+
+    <Button
+        android:id="@+id/cofnij"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="46dp"
+        android:text="BACK"
+        app:layout_constraintStart_toEndOf="@+id/suma"
+        app:layout_constraintTop_toBottomOf="@+id/podzelic" />
+    " />
+</android.support.constraint.ConstraintLayout>
