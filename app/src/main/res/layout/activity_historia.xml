@@ -10,6 +10,8 @@
         android:id="@+id/zapisHistori"
         android:layout_width="383dp"
         android:layout_height="556dp"
+        android:textSize="40dp"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
