@@ -1,7 +1,9 @@
 package galantowicz.kacper.math.uni.lodz.kalkulator;
 
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 public class Historia extends AppCompatActivity {
 
     private TextView wyniki;
-    private ArrayList<String> listaHistori;
+    private Database database;
 
 
     @Override
@@ -18,13 +20,15 @@ public class Historia extends AppCompatActivity {
         setContentView(R.layout.activity_historia);
 
         wyniki = findViewById(R.id.zapisHistori);
-        listaHistori = new ArrayList<String>();
-        listaHistori = (ArrayList<String>) getIntent().getSerializableExtra("LISTA");
-        StringBuilder builder = new StringBuilder();
-        for(String wartosci : listaHistori)
-        {
-            builder.append(wartosci + "\n");
+        database = new Database(this);
+
+
+        Cursor cursor = database.getData();
+        while (cursor.moveToNext()){
+            int id = cursor.getInt(0);
+            String wynik = cursor.getString(1);
+            wyniki.setText(wyniki.getText()+"\n"+ id + ":" + " "  +wynik);
+
         }
-        wyniki.setText(builder.toString());
     }
 }

@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private Button historia;
     private BigDecimal wynik = null;
     private ArrayList<String> listaHistoriiWynikow;
+    private Database database;
 
 
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         cofnij = findViewById(R.id.cofnij);
         rowna = findViewById(R.id.suma);
         historia = findViewById(R.id.historia);
+        database = new Database(this);
 
         ButtonDodac();
         ButtonOdjac();
@@ -109,10 +111,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 wynik = new Expression(editText.getText().toString()).eval();
-
+                String newDane = editText.getText().toString() + " = " + wynik.toPlainString();
+                AddData(newDane);
                 listaHistoriiWynikow.add(editText.getText().toString() + " = " + wynik.toPlainString());
                 editText.setText(wynik.toPlainString());
-                Toast.makeText(MainActivity.this,wynik.toPlainString(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -126,6 +128,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public void AddData(String newDane)
+    {
+        boolean checkData = database.addData(newDane);
+        if(checkData) {
+            Toast.makeText(this, "Data dodana", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(this, "Nie pobrano daty", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
