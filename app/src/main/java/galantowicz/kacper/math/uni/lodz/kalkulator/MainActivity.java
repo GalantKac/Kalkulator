@@ -1,147 +1,139 @@
 package galantowicz.kacper.math.uni.lodz.kalkulator;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.udojava.evalex.Expression;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
+import net.objecthunter.exp4j.ExpressionBuilder;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText editText;
-    private Button dodac;
-    private Button odjac;
-    private Button pomnozyc;
-    private Button podzelic;
-    private Button cofnij;
-    private Button rowna;
-    private Button historia;
-    private BigDecimal wynik = null;
-    private ArrayList<String> listaHistoriiWynikow;
+    private TextView textViewResult;
     private Database database;
-
+    private Button buttonResult;
+    private Button buttonClear;
+    private Button buttonStory;
+    private Button buttonAdd;
+    private Button buttonComma;
+    private Button buttonZeroZero;
+    private Button buttonZero;
+    private Button buttonSubstract;
+    private Button button1;
+    private Button button2;
+    private Button button3;
+    private Button button4;
+    private Button button5;
+    private Button button6;
+    private Button button7;
+    private Button button8;
+    private Button button9;
+    private Button buttonMultiply;
+    private Button buttonDivide;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        listaHistoriiWynikow = new ArrayList<String>();
-        editText = findViewById(R.id.editText);
-        dodac = findViewById(R.id.dodac);
-        odjac = findViewById(R.id.odjac);
-        pomnozyc = findViewById(R.id.pomnozyc);
-        podzelic = findViewById(R.id.podzelic);
-        cofnij = findViewById(R.id.cofnij);
-        rowna = findViewById(R.id.suma);
-        historia = findViewById(R.id.historia);
-        database = new Database(this);
-
-        ButtonDodac();
-        ButtonOdjac();
-        ButtonPodzelic();
-        ButtonPomnozyc();
-        ButtonBack();
-        ButtonWynik();
-        ButtonHistoria();
-
+        init();
+        buttonClear();
+        buttonComma();
+        buttonResult();
+        buttonStory();
     }
 
 
-    private void ButtonDodac(){
-        dodac.setOnClickListener(new View.OnClickListener(){
-
+    private void buttonComma() {
+        buttonComma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editText.setText(editText.getText()+"+");
-
+                if (textViewResult.getText() != "")
+                    textViewResult.setText(textViewResult.getText() + ".");
             }
         });
     }
 
-    private void  ButtonOdjac(){
-        odjac.setOnClickListener(new View.OnClickListener() {
+    private void buttonClear() {
+        buttonClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editText.setText(editText.getText()+"-");
+                String text = textViewResult.getText().toString();
+                if (text.length() != 0)
+                    textViewResult.setText(text.substring(0, text.length() - 1));
             }
         });
     }
 
-    private void ButtonPomnozyc(){
-        pomnozyc.setOnClickListener(new View.OnClickListener() {
+    private void buttonResult() {
+        buttonResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editText.setText(editText.getText()+"*");
-            }
-        });
-    }
-    private void ButtonPodzelic(){
-        podzelic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editText.setText(editText.getText()+"/");
-            }
-        });
-    }
-
-    private void ButtonBack(){
-        cofnij.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String text = editText.getText().toString();
-                if(text.length()!=0)
-                editText.setText(text.substring(0, text.length()-1));
+                if (textViewResult.getText() != "") {
+                    try {
+                        net.objecthunter.exp4j.Expression expression = new ExpressionBuilder(textViewResult.getText().toString()).build();
+                        double calculations = expression.evaluate();
+                        String newData = textViewResult.getText().toString() + " = " + calculations;
+                        addData(newData);
+                        textViewResult.setText(String.valueOf(calculations));
+                    } catch (Exception e) {
+                        Toast.makeText(MainActivity.this, "Error in data", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
     }
 
-    private void  ButtonWynik(){
-        rowna.setOnClickListener(new View.OnClickListener() {
+    private void buttonStory() {
+        buttonStory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                wynik = new Expression(editText.getText().toString()).eval();
-                String newDane = editText.getText().toString() + " = " + wynik.toPlainString();
-                AddData(newDane);
-                listaHistoriiWynikow.add(editText.getText().toString() + " = " + wynik.toPlainString());
-                editText.setText(wynik.toPlainString());
-            }
-        });
-    }
-
-    private void ButtonHistoria(){
-        historia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Historia.class);
-                intent.putExtra("LISTA", listaHistoriiWynikow);
+                Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-    public void AddData(String newDane)
-    {
+    public void addData(String newDane) {
         boolean checkData = database.addData(newDane);
-        if(checkData) {
+        if (checkData) {
             Toast.makeText(this, "Data dodana", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+        } else {
             Toast.makeText(this, "Nie pobrano daty", Toast.LENGTH_SHORT).show();
         }
     }
 
+    private void init() {
+        database = new Database(this);
+        button1 = findViewById(R.id.ButtonOne);
+        button2 = findViewById(R.id.ButtonTwo);
+        button3 = findViewById(R.id.ButtonThree);
+        button4 = findViewById(R.id.ButtonFour);
+        button5 = findViewById(R.id.ButtonFive);
+        button6 = findViewById(R.id.ButtonSix);
+        button7 = findViewById(R.id.ButtonSeven);
+        button8 = findViewById(R.id.ButtonEight);
+        button9 = findViewById(R.id.ButtonNine);
+        buttonAdd = findViewById(R.id.ButtonAdd);
+        buttonStory = findViewById(R.id.ButtonStory);
+        buttonSubstract = findViewById(R.id.ButtonSubtract);
+        buttonMultiply = findViewById(R.id.ButtonMultiply);
+        buttonDivide = findViewById(R.id.ButtonDivide);
+        buttonComma = findViewById(R.id.ButtonComma);
+        buttonZero = findViewById(R.id.ButtonZero);
+        buttonZeroZero = findViewById(R.id.ButtonZeroZero);
+        buttonClear = findViewById(R.id.ButtonClear);
+        buttonResult = findViewById(R.id.ButtonResult);
+        textViewResult = findViewById(R.id.ViewResult);
+    }
 
+    public void onClickOtherButtons(View view) {
+        Button buttonPressed = (Button) view;
+        String valueFromTheButton = buttonPressed.getText().toString();
+        textViewResult.setText(textViewResult.getText() + valueFromTheButton);
+    }
 
 }
